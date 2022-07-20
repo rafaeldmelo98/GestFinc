@@ -33,13 +33,13 @@
 * Data Inicio
 * Data final
 * Valor - Double
-* Categoria - Categoria
+* Categoria - Categoria #F
 * Porcentagem - Double
 * Tempo Horas - Texto
 
 ### Categorias
 * Nome
-* ID
+* ID 
 
 ### Conta
 * Nome
