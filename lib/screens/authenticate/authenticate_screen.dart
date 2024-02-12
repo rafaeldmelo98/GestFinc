@@ -52,7 +52,7 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                       hintStyle: TextStyle(
                           color: ColorsApp.supportColotApp2, fontSize: 12),
                       labelStyle: TextStyle(
-                        color: ColorsApp.supportColorApp1,
+                        color: ColorsApp.secundaryColorApp,
                       ),
                     ),
                     keyboardType: TextInputType.number,
