@@ -41,3 +41,6 @@
 * Iniciei o desenvolvimento do protótipo de acordo com as funcionalidades anotadas.
 * 10/07 finalizei o protótipo
 * PRÓXIMO PASSO: Criar relacionamento de tabelas e atores
+#### 12-02-24
+* Após meses sem programar para esse projeto pessoal. Tomei coragem e retomei
+* Criei a tela inicial e mexi novamente na paleta de cores até a sua forma final
