@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gestao_financeira/utils/colors.dart';
 
-class InitialFormScreen extends StatelessWidget {
-  InitialFormScreen({Key? key}) : super(key: key);
+class InitialFormScreen extends StatefulWidget {
+  const InitialFormScreen({Key? key}) : super(key: key);
 
+  @override
+  State<InitialFormScreen> createState() => _InitialFormScreenState();
+}
+
+class _InitialFormScreenState extends State<InitialFormScreen> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController salaryController = TextEditingController();
   final TextEditingController hoursWorkController = TextEditingController();
   final TextEditingController daysWorkController = TextEditingController();
+  bool showPassword = false;
+  bool showIconHidePassword = false;
+  IconData iconShowPassword = Icons.remove_red_eye_outlined;
 
   @override
   Widget build(BuildContext context) {
@@ -40,23 +49,60 @@ class InitialFormScreen extends StatelessWidget {
                     hintStyle: TextStyle(
                         color: ColorsApp.supportColotApp2, fontSize: 14),
                     labelStyle: TextStyle(
-                      color: ColorsApp.secundaryColorApp,
+                      color: ColorsApp.supportColorApp1,
                     ),
                   ),
                 ),
-                TextFormField(
-                  controller: passwordController,
-                  decoration: const InputDecoration(
-                    hintText: "Digite sua nova senha de acesso",
-                    labelText: "Senha",
-                    hintStyle: TextStyle(
-                        color: ColorsApp.supportColotApp2, fontSize: 14),
-                    labelStyle: TextStyle(
-                      color: ColorsApp.secundaryColorApp,
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        controller: passwordController,
+                        decoration: const InputDecoration(
+                          hintText: "Digite sua nova senha de acesso",
+                          labelText: "Senha",
+                          hintStyle: TextStyle(
+                              color: ColorsApp.supportColotApp2, fontSize: 14),
+                          labelStyle: TextStyle(
+                            color: ColorsApp.supportColorApp1,
+                          ),
+                        ),
+                        keyboardType: TextInputType.number,
+                        obscureText: showPassword,
+                        maxLength: 6,
+                        onTap: () {
+                          setState(() {
+                            showIconHidePassword = !showIconHidePassword;
+                          });
+                        },
+                        onEditingComplete: () {
+                          setState(() {
+                            showIconHidePassword = false;
+                          });
+                        },
+                      ),
                     ),
-                  ),
-                  keyboardType: TextInputType.number,
-                  obscureText: true,
+                    showIconHidePassword
+                        ? IconButton(
+                            onPressed: () {
+                              bool show = !showPassword;
+                              IconData icon;
+                              if (show) {
+                                icon = Icons.remove_red_eye_outlined;
+                              } else {
+                                icon = Icons.remove_red_eye_rounded;
+                              }
+                              setState(() {
+                                showPassword = show;
+                                iconShowPassword = icon;
+                              });
+                            },
+                            icon: Icon(iconShowPassword))
+                        : const SizedBox(
+                            width: 0,
+                            height: 0,
+                          )
+                  ],
                 ),
                 TextFormField(
                   controller: salaryController,
@@ -66,10 +112,24 @@ class InitialFormScreen extends StatelessWidget {
                     hintStyle: TextStyle(
                         color: ColorsApp.supportColotApp2, fontSize: 14),
                     labelStyle: TextStyle(
-                      color: ColorsApp.secundaryColorApp,
+                      color: ColorsApp.supportColorApp1,
                     ),
                   ),
-                  keyboardType: TextInputType.number,
+                  keyboardType: const TextInputType.numberWithOptions(
+                    decimal: true,
+                    signed: false,
+                  ),
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp(r"[0-9.]")),
+                    TextInputFormatter.withFunction((oldValue, newValue) {
+                      final text = newValue.text;
+                      return text.isEmpty
+                          ? newValue
+                          : double.tryParse(text) == null
+                              ? oldValue
+                              : newValue;
+                    }),
+                  ],
                 ),
                 TextFormField(
                   controller: hoursWorkController,
@@ -79,7 +139,7 @@ class InitialFormScreen extends StatelessWidget {
                     hintStyle: TextStyle(
                         color: ColorsApp.supportColotApp2, fontSize: 14),
                     labelStyle: TextStyle(
-                      color: ColorsApp.secundaryColorApp,
+                      color: ColorsApp.supportColorApp1,
                     ),
                   ),
                   keyboardType: TextInputType.number,
@@ -92,7 +152,7 @@ class InitialFormScreen extends StatelessWidget {
                     hintStyle: TextStyle(
                         color: ColorsApp.supportColotApp2, fontSize: 14),
                     labelStyle: TextStyle(
-                      color: ColorsApp.secundaryColorApp,
+                      color: ColorsApp.supportColorApp1,
                     ),
                   ),
                   keyboardType: TextInputType.number,
